@@ -13,6 +13,9 @@ La figure 1 représente le fonctionnement du Deskmate. Il se compose des éléme
 - Une carte __Raspberry Pi__;
 - __Actionneurs :__ Un **Grove Buzzer** est utilisé pour les alertes sonores lorsque l’une des limites définies est dépassée.
 
+![Schema general](schema_deskmate.png)
+*Figure 1 - Schéma général du Deskmate*
+
 ## SCÉNARIOS D’USAGE :
 
 1. L’utilisateur sélectionne dans un menu la température la plus haute et celle la plus basse souhaitée.
