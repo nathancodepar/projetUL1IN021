@@ -42,7 +42,30 @@ def verifier_conditions(user_id, temp_actuel, son_actuel, lum_actuelle):
         
     except sqlite3.Error as error:
         print(f"Erreur de connexion à la base de données : {error}")
-
+        
     return alertes
 
 def modifier_seuils(user_id, nouveau_temp, nouveau_son, nouvelle_lum):
+    
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    db_path = os.path.join(base_dir, '..', 'database', 'base_de_donnees.db')
+
+    try:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        
+        # Modification des valeurs dans la table preferences
+        query = "UPDATE preferences SET temperature = ?, son = ?, luminosite = ? WHERE id = ?"
+        cursor.execute(query, (nouveau_temp, nouveau_son, nouvelle_lum, user_id))
+        
+        # Enregistrement des modifs
+        conn.commit()
+        conn.close()
+        
+        return "Réglages mis à jour avec succès."
+
+    except sqlite3.Error as error:
+        return f"Erreur BDD : {error}":
+
+
+
