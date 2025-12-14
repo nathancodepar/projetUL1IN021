@@ -2,7 +2,7 @@ import sqlite3
 import os
 
 # Vérification du respect des conditions 
-def verifier_conditions(user_id, temp_actuelle, son_actuel, lum_actuelle):
+def verifier_conditions(user_id, temp_actuel, son_actuel, lum_actuelle):
     alertes = []
     
     # Chemin vers la base de données
@@ -29,8 +29,8 @@ def verifier_conditions(user_id, temp_actuelle, son_actuel, lum_actuelle):
             # Vérification des seuils 
             
             # Température
-            if temp_actuelle > seuil_temp_max:
-                alertes.append(f"ALERTE TEMPÉRATURE : {temp_actuelle}°C mesurés (Max : {seuil_temp_max}°C)")
+            if temp_actuel > seuil_temp_max:
+                alertes.append(f"ALERTE TEMPÉRATURE : {temp_actuel}°C mesurés (Max : {seuil_temp_max}°C)")
                 
             # Son
             if son_actuel > seuil_son_max:
@@ -44,3 +44,5 @@ def verifier_conditions(user_id, temp_actuelle, son_actuel, lum_actuelle):
         print(f"Erreur de connexion à la base de données : {error}")
 
     return alertes
+
+def modifier_seuils(user_id, nouveau_temp, nouveau_son, nouvelle_lum):
