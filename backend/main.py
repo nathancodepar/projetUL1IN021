@@ -65,7 +65,8 @@ def modifier_seuils(user_id, nouveau_temp, nouveau_son, nouvelle_lum):
         return "Réglages mis à jour avec succès."
 
     except sqlite3.Error as error:
-        return f"Erreur BDD : {error}":
+        return f"Erreur BDD : {error}:"
+
 
 
 
