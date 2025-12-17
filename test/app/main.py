@@ -15,7 +15,7 @@ def background_measurements():
         current_data["light"] = read_luminosity()
         current_data["sound"] = read_sound_level()
         
-        print(f"Capteurs (SMBus) -> Temp: {current_data['temp']}°C, Light: {current_data['light']}%")
+        print(f"Capteurs (SMBus) -> Temp: {current_data['temp']}°C, Light: {current_data['light']}%, Sound: {current_data['sound']}Db")
         time.sleep(30)
 
 # Démarrage du thread de lecture
