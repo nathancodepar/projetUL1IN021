@@ -1,4 +1,3 @@
 fastapi
 uvicorn
-seeed-python-adc
-grove.py
+smbus2
