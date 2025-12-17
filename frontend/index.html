@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuration des Conditions IoT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Configuration des Seuils de Capteurs</h1>
+    </header>
+
+    <main>
+        <form id="conditionsForm">
+            <section class="condition-group">
+                <h2>🌡️ Température</h2>
+                <label for="tempMin">Minimum (°C) :</label>
+                <input type="number" id="tempMin" value="20" required>
+                <label for="tempMax">Maximum (°C) :</label>
+                <input type="number" id="tempMax" value="25" required>
+            </section>
+
+            <section class="condition-group">
+                <h2>🔊 Son (Bruit)</h2>
+                <label for="soundMin">Minimum (dB) :</label>
+                <input type="number" id="soundMin" value="30" required>
+                <label for="soundMax">Maximum (dB) :</label>
+                <input type="number" id="soundMax" value="50" required>
+            </section>
+
+            <section class="condition-group">
+                <h2>💡 Luminosité</h2>
+                <label for="lightMin">Minimum (Lux) :</label>
+                <input type="number" id="lightMin" value="400" required>
+                <label for="lightMax">Maximum (Lux) :</label>
+                <input type="number" id="lightMax" value="600" required>
+            </section>
+
+            <button type="submit">Envoyer les Conditions à la Raspberry Pi</button>
+        </form>
+
+        <div id="result"></div>
+    </main>
+
+    <footer>
+        <p>Projet de Capteurs et Raspberry Pi</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

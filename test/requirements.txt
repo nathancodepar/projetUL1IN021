@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+pydantic
+sqlalchemy
+python-multipart
+jinja2
+# Pour les capteurs Grove (si vous utilisez le kit GrovePi ou équivalent)
+# Note : L'implémentation exacte dépendra de la librairie choisie.
+# Ex: Si vous utilisez le SDK officiel Seeedstudio :
+# grove.py 
+# Remplacer par la librairie réelle si besoin, ex: RPi.GPIO ou pigpio
