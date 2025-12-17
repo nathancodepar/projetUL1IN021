@@ -45,5 +45,21 @@ def read_luminosity():
     return round(percentage, 2)
 
 def read_sound_level():
-    """Capteur sur A2 (Canal 2)"""
-    return float(read_adc(2))
+    """Capteur sur A2. Convertit la valeur brute 12-bit en décibels (dB)"""
+    try:
+        raw_value = read_adc(2)
+        
+        # Si le capteur ne capte rien du tout (0), on met une valeur minimale
+        if raw_value <= 0:
+            return 30.0  # Niveau de bruit d'une chambre très calme
+            
+        # Formule simplifiée pour estimer les dB
+        # On ajuste le gain (50) pour coller à la réalité d'une pièce normale
+        # On utilise log10 car l'oreille humaine perçoit le son de façon logarithmique
+        dB = 20 * math.log10(raw_value) + 20 
+        
+        # On arrondit pour un affichage propre
+        return round(dB, 1)
+    except Exception as e:
+        print(f"Erreur Son dB: {e}")
+        return 0.0
