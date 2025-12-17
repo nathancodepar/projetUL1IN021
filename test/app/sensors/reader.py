@@ -2,24 +2,27 @@ import math
 import time
 from grove.adc import ADC
 
-# Initialisation du convertisseur Analogique-Numérique
+# Initialisation de l'ADC (Automatique pour le Hat 12 bits)
 adc = ADC()
 
 def read_temperature():
-    """Lecture du capteur de température Grove v1.2 sur le port A4."""
+    """Capteur sur A4. Formule pour Grove Temperature v1.2 (12-bit)"""
     try:
-        # Lecture de la valeur brute sur le canal 4 (Port A4)
-        value = adc.read(4)
-        if value == 0:
-            return 0.0
+        # Lecture brute sur le port A4 (Canal 4)
+        raw_value = adc.read(4)
         
-        # Formule spécifique au capteur Grove Temperature v1.2
-        # (Basée sur une thermistance avec une valeur B de 4275)
-        B = 4275
-        R0 = 100000
+        # Conversion 12-bit (0-4095) vers équivalent 10-bit (0-1023) 
+        # pour la formule mathématique standard
+        value = raw_value / 4.0
+        
+        if value == 0: return 0.0
+        
+        B = 4275  # Valeur B du thermistor
+        R0 = 100000 # Résistance nominale
         R = 1023.0 / value - 1.0
         R = R0 * R
         
+        # Équation de Steinhart-Hart simplifiée
         temperature = 1.0 / (math.log(R / R0) / B + 1 / 298.15) - 273.15
         return round(temperature, 2)
     except Exception as e:
@@ -27,18 +30,19 @@ def read_temperature():
         return 0.0
 
 def read_luminosity():
-    """Lecture du capteur de lumière sur le port A0."""
+    """Capteur sur A0. Retourne un pourcentage (0-100%)"""
     try:
-        # Retourne la valeur brute entre 0 et 1023
-        return float(adc.read(0))
+        raw_value = adc.read(0)
+        # On transforme le 0-4095 en 0-100
+        percentage = (raw_value / 4095.0) * 100
+        return round(percentage, 2)
     except Exception as e:
-        print(f"Erreur Luminosité: {e}")
+        print(f"Erreur Lumière: {e}")
         return 0.0
 
 def read_sound_level():
-    """Lecture du capteur sonore sur le port A2."""
+    """Capteur sur A2. Retourne la valeur brute 12-bit"""
     try:
-        # Retourne l'intensité sonore brute
         return float(adc.read(2))
     except Exception as e:
         print(f"Erreur Son: {e}")

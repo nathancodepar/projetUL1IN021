@@ -1,48 +1,36 @@
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 import threading
-from fastapi import FastAPI, Depends, Request, Form
-from fastapi.templating import Jinja2Templates
-from fastapi.responses import RedirectResponse
-from sqlalchemy.orm import Session
-from . import models, schemas, crud, database
-from .sensors import reader
+import time
+from app.sensors.reader import read_temperature, read_luminosity, read_sound_level
+# Importez ici votre logique de base de données si nécessaire
 
-models.Base.metadata.create_all(bind=database.engine)
 app = FastAPI()
-templates = Jinja2Templates(directory="templates")
 
-def background_task():
+# Stockage temporaire de la dernière mesure
+current_data = {"temp": 0, "light": 0, "sound": 0}
+
+def background_measurements():
+    """Boucle infinie de lecture des capteurs"""
     while True:
-        db = next(database.get_db())
-        prefs = crud.get_preferences(db)
-        t, l, s = reader.read_temperature(), reader.read_luminosity(), reader.read_sound_level()
+        current_data["temp"] = read_temperature()
+        current_data["light"] = read_luminosity()
+        current_data["sound"] = read_sound_level()
         
-        is_opti = (prefs.min_temp <= t <= prefs.max_temp and 
-                   prefs.min_lumi <= l <= prefs.max_lumi and 
-                   prefs.min_sound <= s <= prefs.max_sound)
-        
-        crud.create_measurement(db, schemas.MeasurementBase(temperature=t, luminosity=l, sound_level=s), is_opti)
-        threading.Event().wait(30)
+        print(f"MAJ Capteurs: {current_data}")
+        # Optionnel: Sauvegarder ici dans la base de données
+        time.sleep(30)
 
-@app.on_event("startup")
-def startup():
-    threading.Thread(target=background_task, daemon=True).start()
+# Lancement du thread au démarrage
+thread = threading.Thread(target=background_measurements, daemon=True)
+thread.start()
+
+@app.get("/api/status")
+async def get_status():
+    """Endpoint pour que le frontend récupère les données"""
+    return current_data
 
 @app.get("/")
-def home(request: Request, db: Session = Depends(database.get_db)):
-    return templates.TemplateResponse("index.html", {
-        "request": request, 
-        "last": crud.get_last_measurement(db),
-        "prefs": crud.get_preferences(db)
-    })
-
-@app.post("/update_prefs")
-def update_prefs(min_t: float=Form(...), max_t: float=Form(...), min_l: float=Form(...), 
-                 max_l: float=Form(...), min_s: float=Form(...), max_s: float=Form(...), 
-                 db: Session = Depends(database.get_db)):
-    new_p = schemas.PreferenceBase(min_temp=min_t, max_temp=max_t, min_lumi=min_l, max_lumi=max_l, min_sound=min_s, max_sound=max_s)
-    crud.update_preferences(db, new_p)
-    return RedirectResponse(url="/", status_code=303)
-
-@app.get("/api/calibrate")
-def calibrate():
-    return {"t": reader.read_temperature(), "l": reader.read_luminosity(), "s": reader.read_sound_level()}
+async def read_index():
+    return {"message": "Serveur opérationnel. Accédez à /api/status pour les données."}
