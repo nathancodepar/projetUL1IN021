@@ -31,12 +31,21 @@ def get_sensor_data():
     else:
         temp_final = 23.0
 
-    # --- 2. LUMINOSITÉ (A2) ---
+    # --- 2. LUMINOSITÉ (Port A2) ---
     raw_light = read_analog(2)
-    # Si 15 c'est dans le noir, c'est parfait. 
-    # Si c'est en pleine lumière, fais (raw_light / 40.95)
-    light_percent = round(raw_light / 40.95, 1)
+    
+    # Si la valeur est très basse (comme tes 15), on booste la sensibilité.
+    # On considère que 4095 (max) = environ 1000 lux (soleil direct)
+    # Et on utilise un multiplicateur pour que la lumière artificielle 
+    # de ton bureau arrive vers les 300-500 lx.
+    
+    # Formule boostée :
+    light_lx = (raw_light / 4095.0) * 1200 
+    
+    # Si tu as toujours 15, essaie l'inversion (certains Hats Grove inversent le signal) :
+    # light_lx = ((4095 - raw_temp) / 4095.0) * 1000
 
+    light_percent = round(light_lx, 0)
     # --- 3. SON (A4) ---
     # Pour le son, on va lire plusieurs fois très vite pour attraper le "pic" de bruit
     # --- 3. SON (Port A4) ---
