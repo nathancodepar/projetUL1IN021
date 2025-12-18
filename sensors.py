@@ -32,21 +32,26 @@ def get_sensor_data():
     raw_temp = read_analog(0)
     temp_final = 0.0
     
-    if 0 < raw_temp < 4095:
-        # TEST D'INVERSION : 
-        # Si ta température est négative, c'est que raw_temp est trop grand.
-        # On essaie d'inverser la lecture pour voir si on retombe sur ~20°C.
-        # Remplace la ligne 'resistance = ...' par celle-ci :
-        
-        val_calibree = 4095 - raw_temp # On inverse le signal
-        
-        if val_calibree > 0:
+    # Inversion du signal pour le Hat Grove sur RPi 4
+    val_calibree = 4095 - raw_temp 
+    
+    # On s'assure que val_calibree n'est pas trop proche de 0 ou 4095
+    if 100 < val_calibree < 4000:
+        try:
+            # Calcul de la résistance avec un facteur de correction 
+            # (Si 60°C est trop haut, on augmente le dénominateur)
             resistance = (4095.0 - val_calibree) * 100000.0 / val_calibree
-            try:
-                # Utilisation de la valeur B=4250 pour le capteur v1.2
-                temp_final = 1.0 / (math.log(resistance / 100000.0) / 4250 + 1 / 298.15) - 273.15
-            except:
-                temp_final = 0.0
+            
+            # Formule Steinhart-Hart
+            # On passe B à 3975 (souvent plus précis pour les versions récentes du capteur v1.2)
+            inv_t = 1.0 / 298.15 + (1.0 / 3975.0) * math.log(resistance / 100000.0)
+            temp_final = (1.0 / inv_t) - 273.15
+            
+        except Exception:
+            temp_final = 0.0
+    else:
+        # Si on est hors limites, on renvoie une valeur de sécurité
+        temp_final = 20.0
     
     # --- 2. LUMINOSITÉ (Port A2) ---
     # Conversion en pourcentage simple (0 = Noir, 100 = Très lumineux)
