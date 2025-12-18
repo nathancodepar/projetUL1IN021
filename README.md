@@ -1,20 +1,23 @@
-Le projet **Deskmate** consiste à développer un système de surveillance des conditions environnementales intelligent. Ce dispositif embarqué est conçu pour surveiller, traiter et alerter sur les conditions d’un espace intérieur (domicile, bureau, salle de classe, etc.).
+### DESKMATE
 
-L’objectif principal est d’optimiser le confort des occupants. Le système gère des fonctions temporelles (minuteur) et doit garantir que les paramètres ambiants (niveau sonore, température, luminosité) sont compris dans les seuils établis.
-
-Le système permet de soulager l’utilisateur de la surveillance constante de son environnement en assurant un cadre de vie ou de travail sain et agréable pour tous les occupants.
+Le projet **Deskmate** consiste à développer un système intelligent de surveillance des conditions environnementales pour les espaces intérieurs (bureaux, salles de classe, domicile).
+L'objectif principal est d'optimiser le confort des occupants en surveillant trois paramètres clés : _le niveau sonore, la température et la luminosité_. Le système vise à soulager l'utilisateur d'une surveillance constante en alertant uniquement lorsque les seuils de confort définis sont dépassés.
 
 ## SCHEMA GENERAL DU PROJET :
 
-Le cœur du système est le Raspberry Pi. Sa sélection répond à la contrainte d’utiliser au moins un capteur et permet l’intégration facile des modules utilisés. De plus, pour respecter la contrainte d’enregistrement des données dans une base de données, le Raspberry Pi stockera l’historique des mesures, alertes déclenchées et des évènements du minuteur assurant un suivi sur le long terme. Par ailleurs, la contrainte d’utilisation d’un site web est mise en œuvre en configurant le Raspberry Pi comme un serveur. Grâce à son module Wi-Fi, il rend l’interface de contrôle et de visualisation accessible depuis n’importe quel dispositif (téléphone, ordinateur). Enfin, l’interaction avec un humain est gérée à plusieurs niveaux. L’utilisateur peut configurer les seuils critiques et gérer le minuteur via l’interface web.
+Le cœur du système est le Raspberry Pi. Sa sélection répond à la contrainte d’utiliser au moins un capteur et permet l’intégration facile des modules utilisés. De plus, pour respecter la contrainte d’enregistrement des données dans une base de données, le Raspberry Pi stockera l’historique des mesures, alertes déclenchées et des évènements du minuteur assurant un suivi sur le long terme. Par ailleurs, la contrainte d’utilisation d’un site web est mise en œuvre en configurant le Raspberry Pi comme un serveur. Grâce à son module Wi-Fi, il rend l’interface de contrôle et de visualisation accessible depuis n’importe quel dispositif *(téléphone, ordinateur)*. Enfin, l’interaction avec un humain est gérée à plusieurs niveaux. L’utilisateur peut configurer les seuils critiques et gérer le minuteur via l’interface web.
 
-La figure 1 représente le fonctionnement du Deskmate. Il se compose des éléments suivants:
-- __Capteurs :__ L’acquisition des données environnementales repose sur trois capteurs principaux: le **Grove - Sound Sensor** (le niveau sonore), le **Grove - Temperature Sensor** (la température) et le **Grove - Light Sensor** (la luminosité);
-- Une carte __Raspberry Pi__;
-- __Actionneurs :__ Un **Grove Buzzer** est utilisé pour les alertes sonores lorsque l’une des limites définies est dépassée.
+La figure 1 représente le fonctionnement du Deskmate. Il se compose des éléments suivants :
+
+- __Capteurs :__ L’acquisition des données environnementales repose sur trois capteurs principaux: le *Grove - Sound Sensor* (le niveau sonore), le *Grove - Temperature Sensor* (la température) et le *Grove - Light Sensor* (la luminosité).
+- __Actionneur :__ Une *Grove - LED* est utilisée comme alerte visuelle. Elle s'allume pour avertir l'utilisateur lorsque l'une des limites définies est dépassée.
+- __Raspberry Pi :__ Le cœur du système qui centralise les données provenant de *trois capteurs Grove*.
+- __Base de données :__ Le *Raspberry Pi* stocke l'historique des mesures, les alertes déclenchées et les événements liés au minuteur dans une base de données, permettant un suivi sur le long terme.
+- __Site Web :__ Le *Raspberry Pi* est configuré comme serveur web accessible via Wi-Fi, permettant de visualiser les données et de contrôler le dispositif depuis un ordinateur ou un smartphone.
 
 ![Schema general](schema_deskmate.png)
-*Figure 1 - Schéma général du Deskmate*
+
+*Figure 1 - Schéma général du concept du Deskmate*
 
 ## SCÉNARIOS D’USAGE :
 
