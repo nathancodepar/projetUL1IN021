@@ -20,42 +20,56 @@
         </div>
         <div class="card">
             <h3>Luminosité</h3>
-            <div id="light-val" class="value">--</div>
+            <div id="light-val" class="value">-- lx</div>
         </div>
         <div class="card">
             <h3>Niveau Sonore</h3>
-            <div id="sound-val" class="value">--</div>
+            <div id="sound-val" class="value">-- dB</div>
         </div>
     </div>
 
-    <div class="settings">
-    <h2>Contrôle du Moniteur</h2>
-    <div class="monitor-controls">
-        <button id="btn-start" onclick="controlMonitor('start')" style="background-color: #27ae60;">Démarrer la surveillance</button>
-        <button id="btn-stop" onclick="controlMonitor('stop')" style="background-color: #e74c3c; margin-top: 10px;">Arrêter la surveillance</button>
-    </div>
-    <p id="monitor-msg" style="text-align: center; font-weight: bold;"></p>
-    <hr>
+    <div class="settings" style="margin-bottom: 20px;">
+        <h2>Contrôle du Système</h2>
+        <div class="monitor-controls">
+            <button id="btn-start" onclick="controlMonitor('start')" style="background-color: #27ae60; margin-bottom: 10px;">Démarrer la surveillance</button>
+            <button id="btn-stop" onclick="controlMonitor('stop')" style="background-color: #e74c3c;">Arrêter la surveillance</button>
+        </div>
+        <p id="monitor-msg" style="text-align: center; font-size: 0.9em; font-weight: bold; margin-top: 10px;"></p>
     </div>
 
     <div class="settings">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+            <input type="checkbox" id="show-tips" style="width: 18px; height: 18px; cursor: pointer;">
+            <label for="show-tips" style="font-weight: bold; cursor: pointer;">Afficher les recommandations de confort</label>
+        </div>
+
+        <div id="tips-box" style="display: none; background: #e8f4fd; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid #3498db; font-size: 0.9em;">
+            <p><strong>💡 Valeurs idéales pour le travail :</strong></p>
+            <ul style="margin: 10px 0;">
+                <li><strong>Température :</strong> Entre 19°C et 24°C</li>
+                <li><strong>Luminosité :</strong> Minimum 300 lx (confort visuel)</li>
+                <li><strong>Bruit :</strong> Maximum 60 dB (concentration)</li>
+            </ul>
+            <button onclick="applyDefaults()" style="padding: 5px 10px; width: auto; font-size: 0.8em; background: #3498db;">Appliquer ces valeurs</button>
+        </div>
+
         <h2>Mes Préférences</h2>
         <div class="form-group">
             <label>Température Min/Max (°C)</label>
             <div class="input-range">
-                <input type="number" id="min_temp" step="0.5" placeholder="Min">
-                <input type="number" id="max_temp" step="0.5" placeholder="Max">
+                <input type="number" id="min_temp" step="0.5">
+                <input type="number" id="max_temp" step="0.5">
             </div>
         </div>
         <div class="form-group">
-            <label>Luminosité Min</label>
+            <label>Luminosité Min (lx)</label>
             <input type="number" id="min_light">
         </div>
         <div class="form-group">
-            <label>Bruit Max (Seuil)</label>
+            <label>Bruit Max (dB)</label>
             <input type="number" id="min_sound">
         </div>
-        <button id="btn-save">Enregistrer les réglages</button>
+        <button onclick="savePreferences()">Enregistrer les réglages</button>
     </div>
 </div>
 
