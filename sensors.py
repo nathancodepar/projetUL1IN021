@@ -29,17 +29,24 @@ def get_sensor_data():
     """
     
     # --- 1. TEMPÉRATURE (Port A0) ---
-    # Capteur Grove Temperature v1.2 (Thermistance)
     raw_temp = read_analog(0)
     temp_final = 0.0
+    
     if 0 < raw_temp < 4095:
-        # Calcul de la résistance de la thermistance
-        resistance = (4095.0 - raw_temp) * 100000.0 / raw_temp
-        # Formule Steinhart-Hart (B=4250 pour v1.2)
-        try:
-            temp_final = 1.0 / (math.log(resistance / 100000.0) / 4250 + 1 / 298.15) - 273.15
-        except ValueError:
-            temp_final = 0.0
+        # TEST D'INVERSION : 
+        # Si ta température est négative, c'est que raw_temp est trop grand.
+        # On essaie d'inverser la lecture pour voir si on retombe sur ~20°C.
+        # Remplace la ligne 'resistance = ...' par celle-ci :
+        
+        val_calibree = 4095 - raw_temp # On inverse le signal
+        
+        if val_calibree > 0:
+            resistance = (4095.0 - val_calibree) * 100000.0 / val_calibree
+            try:
+                # Utilisation de la valeur B=4250 pour le capteur v1.2
+                temp_final = 1.0 / (math.log(resistance / 100000.0) / 4250 + 1 / 298.15) - 273.15
+            except:
+                temp_final = 0.0
     
     # --- 2. LUMINOSITÉ (Port A2) ---
     # Conversion en pourcentage simple (0 = Noir, 100 = Très lumineux)
