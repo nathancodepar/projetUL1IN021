@@ -1,24 +1,30 @@
 import sqlite3
+import os
 
 DB_PATH = "data/workspace.db"
 
 def init_db():
+    # Création du dossier data s'il n'existe pas
+    if not os.path.exists('data'):
+        os.makedirs('data')
+        
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
-    # Table pour les mesures
+    
+    # Table des mesures
     cursor.execute('''CREATE TABLE IF NOT EXISTS measurements (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
         temp REAL, light REAL, sound REAL, status TEXT)''')
     
-    # Table pour les préférences (une seule ligne)
+    # Table des préférences
     cursor.execute('''CREATE TABLE IF NOT EXISTS preferences (
         id INTEGER PRIMARY KEY,
-        min_temp REAL, max_temp REAL,
-        min_light REAL, min_sound REAL)''')
+        min_temp REAL, max_temp REAL, min_light REAL, min_sound REAL)''')
     
-    # Valeurs par défaut si vide
-    cursor.execute("INSERT OR IGNORE INTO preferences (id, min_temp, max_temp, min_light, min_sound) VALUES (1, 19, 25, 300, 500)")
+    # Insertion des préférences par défaut si la table est vide
+    cursor.execute("INSERT OR IGNORE INTO preferences VALUES (1, 19.0, 25.0, 300.0, 600.0)")
+    
     conn.commit()
     conn.close()
 

@@ -28,3 +28,26 @@ def update_prefs(p: Prefs):
                  (p.min_temp, p.max_temp, p.min_light))
     conn.commit()
     return {"message": "Préférences mises à jour"}
+
+# Ajoute ceci dans main.py
+
+@app.get("/api/preferences")
+def read_prefs():
+    from database import get_preferences
+    return get_preferences()
+
+# Modifie ton Pydantic pour inclure le son
+class Prefs(BaseModel):
+    min_temp: float
+    max_temp: float
+    min_light: float
+    min_sound: float # Ajouté pour le capteur de son
+
+@app.post("/api/preferences")
+def update_prefs(p: Prefs):
+    conn = sqlite3.connect(DB_PATH)
+    conn.execute("UPDATE preferences SET min_temp=?, max_temp=?, min_light=?, min_sound=? WHERE id=1",
+                 (p.min_temp, p.max_temp, p.min_light, p.min_sound))
+    conn.commit()
+    conn.close()
+    return {"message": "Success"}

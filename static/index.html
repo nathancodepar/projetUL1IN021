@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moniteur de Travail IoT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Station Travail Saine</h1>
+
+    <div id="status-box" class="status-banner">Initialisation...</div>
+
+    <div class="dashboard">
+        <div class="card">
+            <h3>Température</h3>
+            <div id="temp-val" class="value">-- °C</div>
+        </div>
+        <div class="card">
+            <h3>Luminosité</h3>
+            <div id="light-val" class="value">--</div>
+        </div>
+        <div class="card">
+            <h3>Niveau Sonore</h3>
+            <div id="sound-val" class="value">--</div>
+        </div>
+    </div>
+
+    <div class="settings">
+        <h2>Mes Préférences</h2>
+        <div class="form-group">
+            <label>Température Min/Max (°C)</label>
+            <div class="input-range">
+                <input type="number" id="min_temp" step="0.5" placeholder="Min">
+                <input type="number" id="max_temp" step="0.5" placeholder="Max">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Luminosité Min</label>
+            <input type="number" id="min_light">
+        </div>
+        <div class="form-group">
+            <label>Bruit Max (Seuil)</label>
+            <input type="number" id="min_sound">
+        </div>
+        <button id="btn-save">Enregistrer les réglages</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
