@@ -22,7 +22,6 @@ body {
 
 h1 { text-align: center; margin-bottom: 30px; }
 
-/* Bannière de Statut */
 .status-banner {
     padding: 15px;
     border-radius: 8px;
@@ -30,11 +29,10 @@ h1 { text-align: center; margin-bottom: 30px; }
     font-weight: bold;
     margin-bottom: 25px;
     color: white;
-    background-color: #bdc3c7; /* Gris par défaut */
+    background-color: #bdc3c7;
     transition: background-color 0.5s ease;
 }
 
-/* Grille des capteurs */
 .dashboard {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -64,7 +62,6 @@ h1 { text-align: center; margin-bottom: 30px; }
     margin: 15px 0;
 }
 
-/* Section Réglages */
 .settings {
     background: var(--card-bg);
     padding: 30px;
