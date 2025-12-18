@@ -83,3 +83,36 @@ saveBtn.addEventListener('click', savePreferences);
 loadPreferences(); // Charger les réglages au début
 updateData();      // Première lecture des capteurs
 setInterval(updateData, 10000); // Mise à jour automatique toutes les 10 secondes
+
+async function controlMonitor(action) {
+    try {
+        const response = await fetch(`/api/monitor/${action}`, { method: 'POST' });
+        const data = await response.json();
+        document.getElementById('monitor-msg').innerText = data.status;
+        checkMonitorStatus(); // Mettre à jour l'interface
+    } catch (e) {
+        console.error("Erreur contrôle moniteur", e);
+    }
+}
+
+async function checkMonitorStatus() {
+    const response = await fetch('/api/monitor/status');
+    const data = await response.json();
+    const startBtn = document.getElementById('btn-start');
+    const stopBtn = document.getElementById('btn-stop');
+
+    if (data.running) {
+        startBtn.disabled = true;
+        startBtn.style.opacity = "0.5";
+        stopBtn.disabled = false;
+        stopBtn.style.opacity = "1";
+    } else {
+        startBtn.disabled = false;
+        startBtn.style.opacity = "1";
+        stopBtn.disabled = true;
+        stopBtn.style.opacity = "0.5";
+    }
+}
+
+// Appeler checkMonitorStatus au chargement de la page
+checkMonitorStatus();
