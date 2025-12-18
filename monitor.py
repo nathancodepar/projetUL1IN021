@@ -38,7 +38,7 @@ def run_monitor():
             save_measurement(temp, light, sound, status)
             print(f"[{status}] T:{temp}°C | L:{light}lx | S:{sound}dB")
             
-            time.sleep(30)
+            time.sleep(10)
 
     except (KeyboardInterrupt, SystemExit):
         # Capturé lors du clic sur "Arrêter" (Signal SIGINT)
