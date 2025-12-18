@@ -39,14 +39,24 @@ def get_sensor_data():
 
     # --- 3. SON (A4) ---
     # Pour le son, on va lire plusieurs fois très vite pour attraper le "pic" de bruit
-    samples = []
-    for _ in range(10):
-        samples.append(read_analog(4))
-        time.sleep(0.001)
+    # --- 3. SON (Port A4) ---
+    # On prend 50 mesures très rapides pour détecter l'amplitude maximale
+    sound_samples = []
+    for _ in range(50):
+        val = read_analog(4)
+        sound_samples.append(val)
     
-    max_sample = max(samples)
-    # Conversion dB (on ajuste l'offset à -10 car 80dB au repos était trop haut)
-    sound_db = (20 * math.log10(max(max_sample, 1))) - 10
+    # On calcule l'amplitude (Max - Min) pour ignorer le bruit de fond électrique
+    amplitude = max(sound_samples) - min(sound_samples)
+    
+    # Conversion en "Décibels approximatifs"
+    # Plus l'amplitude est grande, plus le son est fort
+    if amplitude > 0:
+        sound_db = (20 * math.log10(amplitude)) + 30 
+    else:
+        sound_db = 30
+        
+    # On bride entre 30dB (silence) et 100dB (vacarme)
     sound_db = max(30, min(100, sound_db))
 
     return round(temp_final, 1), light_percent, round(sound_db, 1)
