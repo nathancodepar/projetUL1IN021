@@ -29,6 +29,16 @@
     </div>
 
     <div class="settings">
+    <h2>Contrôle du Moniteur</h2>
+    <div class="monitor-controls">
+        <button id="btn-start" onclick="controlMonitor('start')" style="background-color: #27ae60;">Démarrer la surveillance</button>
+        <button id="btn-stop" onclick="controlMonitor('stop')" style="background-color: #e74c3c; margin-top: 10px;">Arrêter la surveillance</button>
+    </div>
+    <p id="monitor-msg" style="text-align: center; font-weight: bold;"></p>
+    <hr>
+    </div>
+
+    <div class="settings">
         <h2>Mes Préférences</h2>
         <div class="form-group">
             <label>Température Min/Max (°C)</label>
