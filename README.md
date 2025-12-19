@@ -29,3 +29,4 @@ La figure 1 représente le fonctionnement du Deskmate. Il se compose des éléme
 6. Le raspberry vérifie périodiquement le niveau de luminosité. Si celle-ci est trop basse, une led sur le Raspberry Pi s’allume pour avertir l’utilisateur.
 7. L'utilisateur va sur l'interface web pour consulter en temps réel les valeurs actuelles de température, luminosité et niveau sonore, ainsi que l'état global du système.
 8. L'utilisateur peut activer ou désactiver la surveillance automatique via un bouton sur l'interface web.
+9. À intervalles réguliers (toutes les 10 secondes), le Raspberry Pi enregistre automatiquement les mesures et le statut dans une base de données pour conserver un historique des conditions de travail.
