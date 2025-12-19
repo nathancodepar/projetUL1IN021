@@ -13,7 +13,7 @@ GPIO.setup(LED_PIN, GPIO.OUT)
 
 def run_monitor():
     init_db()
-    print("Démarrage du monitoring (toutes les 30s) avec alerte LED...")
+    print("Démarrage du monitoring (toutes les 10s) avec alerte LED...")
 
     try:
         while True:
