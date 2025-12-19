@@ -9,23 +9,18 @@ from database import init_db, DB_PATH
 
 app = FastAPI()
 
-# Initialisation de la base de données au lancement du serveur
 init_db()
 
-# Variable globale pour stocker le processus du moniteur
 monitor_process = None 
 
-# Service des fichiers statiques (HTML, JS, CSS)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Modèle de données pour les préférences
 class Prefs(BaseModel):
     min_temp: float
     max_temp: float
     min_light: float
     min_sound: float
 
-# --- ROUTES DES DONNÉES ---
 
 @app.get("/api/current")
 def get_current():
@@ -54,15 +49,13 @@ def update_prefs(p: Prefs):
     conn.close()
     return {"message": "Success"}
 
-# --- ROUTES DE CONTRÔLE DU MONITEUR ---
 
 @app.post("/api/monitor/start")
 def start_monitor():
     """Lance le script monitor.py en arrière-plan"""
     global monitor_process
-    # On vérifie si le processus ne tourne pas déjà
+    
     if monitor_process is None or monitor_process.poll() is not None:
-        # On lance le processus dans un nouveau groupe (pour pouvoir le tuer proprement)
         monitor_process = subprocess.Popen(
             ["python3", "monitor.py"], 
             preexec_fn=os.setsid
@@ -74,10 +67,9 @@ def start_monitor():
 def stop_monitor():
     """Arrête proprement le moniteur et éteint la LED"""
     global monitor_process
+    
     if monitor_process and monitor_process.poll() is None:
         try:
-            # Envoie SIGINT au groupe de processus (simule un Ctrl+C)
-            # Cela permet au 'finally' de monitor.py d'éteindre la LED
             os.killpg(os.getpgid(monitor_process.pid), signal.SIGINT)
             monitor_process = None
             return {"status": "Moniteur arrêté (LED éteinte)"}
