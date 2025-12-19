@@ -5,7 +5,6 @@ import sys
 from sensors import get_sensor_data
 from database import save_measurement, get_preferences, init_db
 
-# --- CONFIGURATION DE LA LED ---
 LED_PIN = 18 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -41,10 +40,8 @@ def run_monitor():
             time.sleep(10)
 
     except (KeyboardInterrupt, SystemExit):
-        # Capturé lors du clic sur "Arrêter" (Signal SIGINT)
         print("Signal d'arrêt reçu...")
     finally:
-        # Sécurité ultime : On éteint la LED avant de quitter
         GPIO.output(LED_PIN, GPIO.LOW)
         GPIO.cleanup()
         print("LED éteinte et GPIO libéré.")
