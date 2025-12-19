@@ -1,4 +1,4 @@
-### DESKMATE
+# DESKMATE
 
 Le projet **Deskmate** consiste à développer un système intelligent de surveillance des conditions environnementales pour les espaces intérieurs (bureaux, salles de classe, domicile).
 L'objectif principal est d'optimiser le confort des occupants en surveillant trois paramètres clés : _le niveau sonore, la température et la luminosité_. Le système vise à soulager l'utilisateur d'une surveillance constante en alertant uniquement lorsque les seuils de confort définis sont dépassés.
@@ -21,9 +21,9 @@ La figure 1 représente le fonctionnement du Deskmate. Il se compose des éléme
 
 ## SCÉNARIOS D’USAGE :
 
-1. L’utilisateur sélectionne dans un menu la température la plus haute et celle la plus basse souhaitée.
-2. Le raspberry mesure la température à un moment fixe et vérifie si elle est comprise entre l’écart de températures donné par l’utilisateur. Dans le cas où elle n’est pas comprise dans l’écart, un message d’alerte est envoyé sur le site web.
-3. L’utilisateur sélectionne dans un menu le niveau de son maximum à ne pas dépasser.
-4. Le raspberry mesure le niveau de son à un moment fixe et vérifie s’il est en dessous du seuil donné par l’utilisateur. Dans le cas où il lui est supérieur, un message d’alerte est envoyé sur le site web.
-5. Le raspberry vérifie périodiquement le niveau de luminosité. Si celle-ci est trop basse, un message d’alerte est envoyé sur le site web.
-6. Grâce à un menu ou bien au bouton, l’utilisateur peut activer un minuteur réglé au temps voulu.
+1. L’utilisateur sélectionne dans un menu déroulant la température la plus haute et celle la plus basse souhaitée.
+2. Le raspberry mesure la température à un moment fixe et vérifie si elle est comprise entre l’écart de températures donné par l’utilisateur. Dans le cas où elle n’est pas comprise dans l’écart, une led sur le Raspberry Pi s’allume pour avertir l’utilisateur.
+3. L’utilisateur sélectionne dans un menu déroulant le seuil de son maximum à ne pas dépasser.
+4. Le raspberry mesure la fréquence de son à un moment fixe et vérifie si elle est en dessous du seuil donné par l’utilisateur. Dans le cas où elle lui est supérieure, une led sur le Raspberry Pi s’allume pour avertir l’utilisateur.
+5. L’utilisateur sélectionne dans un menu le niveau de luminosité minimum à ne pas dépasser.
+6. Le raspberry vérifie périodiquement le niveau de luminosité. Si celle-ci est trop basse, une led sur le Raspberry Pi s’allume pour avertir l’utilisateur.
