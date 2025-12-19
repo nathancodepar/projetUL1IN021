@@ -1,12 +1,9 @@
-// Éléments du DOM
 const statusBox = document.getElementById('status-box');
 const showTipsCheckbox = document.getElementById('show-tips');
 const tipsBox = document.getElementById('tips-box');
 const monitorMsg = document.getElementById('monitor-msg');
 
-/**
- * Mise à jour des données capteurs
- */
+
 async function updateData() {
     try {
         const response = await fetch('/api/current');
@@ -25,9 +22,7 @@ async function updateData() {
     }
 }
 
-/**
- * Gestion du moniteur (Démarrer/Arrêter)
- */
+
 async function controlMonitor(action) {
     try {
         const response = await fetch(`/api/monitor/${action}`, { method: 'POST' });
@@ -60,9 +55,7 @@ async function checkMonitorStatus() {
     } catch (e) { console.log("Serveur non prêt"); }
 }
 
-/**
- * Préférences
- */
+
 async function loadPreferences() {
     try {
         const response = await fetch('/api/preferences');
@@ -91,9 +84,7 @@ async function savePreferences() {
     if (response.ok) alert("Réglages enregistrés !");
 }
 
-/**
- * Recommandations
- */
+
 showTipsCheckbox.addEventListener('change', function() {
     tipsBox.style.display = this.checked ? 'block' : 'none';
 });
@@ -105,8 +96,8 @@ function applyDefaults() {
     document.getElementById('min_sound').value = 60;
 }
 
-// Initialisation
+
 loadPreferences();
 checkMonitorStatus();
-setInterval(updateData, 5000); // Mise à jour toutes les 5 secondes
+setInterval(updateData, 5000);
 updateData();
